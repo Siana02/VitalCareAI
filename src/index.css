@@ -1,0 +1,56 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Primary Colors */
+  --color-sky-blue: #4DA6FF;
+  --color-mint-green: #3DDC97;
+
+  /* Accent Colors */
+  --color-coral: #FF6B6B;
+  --color-light-gray: #F9FAFB;
+
+  /* Additional tones */
+  --color-sky-blue-dark: #2d8de8;
+  --color-mint-dark: #29c47e;
+  --color-coral-dark: #e85555;
+  --color-white: #ffffff;
+  --color-text-dark: #1a2340;
+  --color-text-mid: #4a5568;
+
+  /* Fonts */
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-logo: 'Nunito', sans-serif;
+
+  /* Spacing */
+  --section-padding: 6rem 1.5rem;
+  --card-radius: 20px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-light-gray);
+  color: var(--color-text-dark);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: var(--font-body);
+}

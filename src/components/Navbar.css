@@ -1,0 +1,95 @@
+/* ───────────── Navbar ───────────── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ── Logo ── */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+  font-family: var(--font-logo);
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.navbar__logo-v {
+  color: var(--color-coral);
+  font-size: 1.3em;
+  line-height: 1;
+}
+
+.navbar__logo-vital {
+  color: var(--color-sky-blue);
+}
+
+.navbar__logo-care {
+  color: var(--color-mint-green);
+}
+
+.navbar__logo-ai {
+  color: var(--color-text-mid);
+  font-size: 0.9em;
+}
+
+/* ── Links ── */
+.navbar__links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.navbar__link {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-mid);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.navbar__link:hover {
+  color: var(--color-sky-blue);
+}
+
+/* ── CTA ── */
+.navbar__cta {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--color-sky-blue), var(--color-mint-green));
+  color: var(--color-white);
+  border-radius: 50px;
+  padding: 0.55rem 1.5rem;
+  transition: opacity 0.2s, transform 0.2s;
+  box-shadow: 0 3px 12px rgba(77, 166, 255, 0.35);
+}
+
+.navbar__cta:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .navbar__links {
+    display: none;
+  }
+
+  .navbar {
+    padding: 0.85rem 1.25rem;
+  }
+}
