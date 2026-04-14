@@ -2,8 +2,27 @@
 .features {
   position: relative;
   background: var(--color-white);
+  /* Subtle medical grid texture */
+  background-image:
+    linear-gradient(rgba(77, 166, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77, 166, 255, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
   padding: 0 1.5rem 6rem;
   overflow: hidden;
+}
+
+/* ── Cursor Glow Trail ── */
+.features__glow-trail {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(77, 166, 255, 0.13) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  opacity: 0;
+  z-index: 0;
 }
 
 /* ── Wave Divider ── */
@@ -21,6 +40,8 @@
 }
 
 .features__inner {
+  position: relative;
+  z-index: 1;
   max-width: 1100px;
   margin: 0 auto;
   text-align: center;
@@ -37,7 +58,10 @@
 
 /* ── Feature Card ── */
 .feat-card {
-  background: var(--color-light-gray);
+  background: rgba(249, 250, 251, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: var(--card-radius);
   padding: 2.25rem 2rem;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
@@ -47,23 +71,25 @@
 
   /* Entry */
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(28px) scale(0.97);
 }
 
 .feat-card.visible {
-  animation: featReveal 0.55s ease forwards;
+  animation: featRevealBounce 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-@keyframes featReveal {
-  to { opacity: 1; transform: translateY(0); }
+@keyframes featRevealBounce {
+  0%   { opacity: 0; transform: translateY(28px) scale(0.97); }
+  60%  { opacity: 1; transform: translateY(-4px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .feat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.1);
 }
 
-/* ── Icon ── */
+/* ── Icon Wrapper ── */
 .feat-card__icon {
   display: flex;
   align-items: center;
@@ -72,6 +98,8 @@
   height: 60px;
   border-radius: 14px;
   margin-bottom: 1.25rem;
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease, box-shadow 0.25s ease;
 }
 
 /* ── Icon Animations ── */
@@ -87,20 +115,90 @@
   animation: featGlow 2.8s ease-in-out infinite;
 }
 
+.feat-icon--neural {
+  animation: featNeural 3.2s ease-in-out infinite;
+}
+
 @keyframes featPulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+  50%       { transform: scale(1.2); }
 }
 
 @keyframes featRotate {
   0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(8deg); }
-  75% { transform: rotate(-8deg); }
+  25%       { transform: rotate(8deg); }
+  75%       { transform: rotate(-8deg); }
 }
 
 @keyframes featGlow {
   0%, 100% { box-shadow: 0 0 0 0 rgba(77, 166, 255, 0); }
-  50% { box-shadow: 0 0 0 10px rgba(77, 166, 255, 0.15); }
+  50%       { box-shadow: 0 0 0 10px rgba(77, 166, 255, 0.14); }
+}
+
+@keyframes featNeural {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  33%       { transform: scale(1.12); filter: brightness(1.2); }
+  66%       { transform: scale(0.95); filter: brightness(0.9); }
+}
+
+/* ── Icon hover glows — unique per feature type ── */
+.feat-card[data-feat="security"]:hover .feat-card__icon {
+  transform: scale(1.14) rotate(-6deg);
+  filter: drop-shadow(0 4px 8px rgba(61, 220, 151, 0.55));
+  box-shadow: 0 0 0 6px rgba(61, 220, 151, 0.12);
+}
+
+.feat-card[data-feat="care"]:hover .feat-card__icon {
+  transform: scale(1.16);
+  filter: drop-shadow(0 4px 10px rgba(255, 107, 107, 0.6));
+  box-shadow: 0 0 0 6px rgba(255, 107, 107, 0.12);
+}
+
+.feat-card[data-feat="telehealth"]:hover .feat-card__icon {
+  transform: scale(1.14);
+  filter: drop-shadow(0 4px 10px rgba(77, 166, 255, 0.65)) brightness(1.2);
+  box-shadow: 0 0 0 6px rgba(77, 166, 255, 0.12);
+}
+
+.feat-card[data-feat="ai"]:hover .feat-card__icon {
+  transform: scale(1.14);
+  filter: drop-shadow(0 4px 8px rgba(77, 166, 255, 0.5)) drop-shadow(0 0 14px rgba(61, 220, 151, 0.3));
+  box-shadow: 0 0 0 6px rgba(77, 166, 255, 0.1);
+}
+
+/* ── Microcopy Badge Tooltip ── */
+.feat-badge {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(26, 35, 64, 0.88);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.feat-badge::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: rgba(26, 35, 64, 0.88);
+}
+
+.feat-card:hover .feat-badge {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* ── Card Text ── */
@@ -135,4 +233,16 @@
   .features__wave {
     margin-bottom: 3rem;
   }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .features__glow-trail           { display: none; }
+  .feat-icon--pulse,
+  .feat-icon--rotate,
+  .feat-icon--glow,
+  .feat-icon--neural              { animation: none; }
+  .feat-card                      { transform: none; opacity: 0; }
+  .feat-card.visible              { animation: none; opacity: 1; transform: none; }
+  .feat-card[data-feat]:hover .feat-card__icon { transform: none; filter: none; }
 }
